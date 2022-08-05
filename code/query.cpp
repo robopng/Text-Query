@@ -32,7 +32,7 @@ void query(string target, string filename, bool fullprint){
     map<int, string> result;  // <line number, line>
     ifstream file(filename);  // not done as an argument because original name is needed
     string line = "", word = "";
-    int line_number = 0, occurences = 0;
+    int line_number = 0;
 
     // unnecessary guard but makes program overall more readable in console
     if(!file.is_open()){
@@ -47,7 +47,6 @@ void query(string target, string filename, bool fullprint){
             if(!word.compare(target)){
                 // automatically add nonexistent pair to result map
                 result[line_number] = line;
-                ++occurences;
             }
         }
 
@@ -55,7 +54,7 @@ void query(string target, string filename, bool fullprint){
     }
 
     // x occurences of keyword "x" in file "y"
-    cout << occurences << " occurences of keyword \"" << target << "\""
+    cout << results.size() << " occurences of keyword \"" << target << "\""
          << " in file \"" << filename << "\"" << endl;
     if (!fullprint) return;
 
