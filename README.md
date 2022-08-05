@@ -5,5 +5,5 @@
  query.exe <options> <keyword> <relative file directory>
  
  Options:
- -h  || --help
+ -h  || --help 
  -fp || --fullprint
