@@ -4,6 +4,6 @@
  Usage:
  query.exe <options> <keyword> <relative file directory>
  
- Options:
+ Options: <br />
  -h  || --help <br />
- -fp || --fullprint
+ -fp || --fullprint <br />
