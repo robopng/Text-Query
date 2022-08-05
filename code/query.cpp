@@ -21,23 +21,31 @@ int main(int argc, char *argv[]){
         else if(!str.compare("-h") || !str.compare("--help")) print_help();
     }
 
-    string tar = *argv;
-    string file = *(++argv);
+    // having these directly in the query call doesn't work, pointer issue?
+    string tar = *argv, file = *(++argv);
     query(tar, file, fullprint);
+
     exit(EXIT_SUCCESS);
 }
 
 void query(string target, string filename, bool fullprint){
-    map<int, string> result;
+    map<int, string> result;  // <line number, line>
     ifstream file(filename);  // not done as an argument because original name is needed
-    string line, word;
-    int line_number, occurrences;
+    string line = "", word = "";
+    int line_number = 0, occurences = 0;
+
+    // unnecessary guard but makes program overall more readable in console
+    if(!file.is_open()){
+        cout << "No such file or directory!" << endl;
+        exit(EXIT_FAILURE);
+    }
 
     while(getline(file, line)){
-        stringstream linestream(line);
+        istringstream linestream(line);
 
         while(linestream >> word){
             if(!word.compare(target)){
+                // automatically add nonexistent pair to result map
                 result[line_number] = line;
                 ++occurences;
             }
@@ -46,13 +54,14 @@ void query(string target, string filename, bool fullprint){
         ++line_number;
     }
 
+    // x occurences of keyword "x" in file "y"
     cout << occurences << " occurences of keyword \"" << target << "\""
          << " in file \"" << filename << "\"" << endl;
     if (!fullprint) return;
 
     for(auto pair : result){
         cout << "(" << pair.first << ") " << pair.second;
-        cout << "\n";
+        cout << "\n";  // flush is too costly here
     }
     cout << endl;
 }
